@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-//using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace Ejer4SoundEffect
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        //Song song;
+        Song song;
         List<SoundEffect> soundEffects;
 
         public Game1()
@@ -52,11 +52,11 @@ namespace Ejer4SoundEffect
             var instance = soundEffects[1].CreateInstance();
             instance.IsLooped = false;
             instance.Play();
-            /*
-            song = Contd1ent.Load<Song>("punch");
+            
+            song = Content.Load<Song>("bso");
             MediaPlayer.Play(song);
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
-            */
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -65,12 +65,10 @@ namespace Ejer4SoundEffect
         /// game-specific content.
         /// </summary>
 
-        /*
         void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e) {
             MediaPlayer.Volume = -0.1f;
             MediaPlayer.Play(song);
         }
-        */
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here

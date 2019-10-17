@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin bso.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:bso.mp3
+
 #begin punch.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
