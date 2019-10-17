@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+//using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
+using System.Collections.Generic;
 
 namespace Ejer4SoundEffect
 {
@@ -11,11 +14,14 @@ namespace Ejer4SoundEffect
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        //Song song;
+        List<SoundEffect> soundEffects;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            soundEffects = new List<SoundEffect>();
         }
 
         /// <summary>
@@ -39,7 +45,18 @@ namespace Ejer4SoundEffect
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            soundEffects.Add(Content.Load<SoundEffect>("punch"));
+            soundEffects.Add(Content.Load<SoundEffect>("shocked"));
+            //soundEffects[1].Play();
 
+            var instance = soundEffects[1].CreateInstance();
+            instance.IsLooped = false;
+            instance.Play();
+            /*
+            song = Contd1ent.Load<Song>("punch");
+            MediaPlayer.Play(song);
+            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+            */
             // TODO: use this.Content to load your game content here
         }
 
@@ -47,6 +64,13 @@ namespace Ejer4SoundEffect
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
         /// </summary>
+
+        /*
+        void MediaPlayer_MediaStateChanged(object sender, System.EventArgs e) {
+            MediaPlayer.Volume = -0.1f;
+            MediaPlayer.Play(song);
+        }
+        */
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
@@ -63,6 +87,19 @@ namespace Ejer4SoundEffect
                 Exit();
 
             // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.D1)) {
+                soundEffects[0].CreateInstance().Play();
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D2)) {
+                soundEffects[1].CreateInstance().Play();
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
+                if (SoundEffect.MasterVolume == 0.0) {
+                    SoundEffect.MasterVolume = 1.0f;
+                } else {
+                    SoundEffect.MasterVolume = 0.0f;
+                }
+            }
 
             base.Update(gameTime);
         }
