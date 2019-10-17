@@ -34,9 +34,8 @@ namespace Ejer4ParallaxBackground
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            mov = new Moverse(Content.Load<Texture2D>("F1"), new Rectangle(0, 0, 900, 500));
-            mov2 = new Moverse(Content.Load<Texture2D>("F2"), new Rectangle(900, 0, 900, 500));
-
+            mov = new Moverse(Content.Load<Texture2D>("Fondo2"), new Rectangle(0, 0, 1280, 500));
+            mov2 = new Moverse(Content.Load<Texture2D>("Fondo2"), new Rectangle(1280, 0, 1280, 500));
         }
 
         /// <summary>
@@ -62,11 +61,10 @@ namespace Ejer4ParallaxBackground
             {
                 mov.rectangulo.X = mov2.rectangulo.X + mov2.textura.Width;
             }
-            
-            
+                  
             if (mov2.rectangulo.X + mov2.textura.Width <= 0)
             {
-                mov.rectangulo.X = mov2.rectangulo.X + mov2.textura.Width;
+                mov2.rectangulo.X = mov.rectangulo.X + mov.textura.Width;
             }
             
             mov.Actualizar();

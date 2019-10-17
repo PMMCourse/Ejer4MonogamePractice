@@ -30,7 +30,6 @@ namespace Ejer4ParallaxBackground
         public void Actualizar()
         {
             rectangulo.X -= 3; //CAMBIANDO EL NUMERO, VA MAS RAPIDO O LENTO 
-
         }
     }
 }
