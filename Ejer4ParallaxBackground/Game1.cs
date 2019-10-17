@@ -13,18 +13,15 @@ namespace Ejer4ParallaxBackground
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Moverse mov;
+        Moverse mov2;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -32,16 +29,13 @@ namespace Ejer4ParallaxBackground
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            mov = new Moverse(Content.Load<Texture2D>("Fondo2"), new Rectangle(0, 0, 1280, 500));
+            mov2 = new Moverse(Content.Load<Texture2D>("Fondo2"), new Rectangle(1280, 0, 1280, 500));
         }
 
         /// <summary>
@@ -62,9 +56,19 @@ namespace Ejer4ParallaxBackground
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
-
+            
+            if(mov.rectangulo.X + mov.textura.Width <= 0)
+            {
+                mov.rectangulo.X = mov2.rectangulo.X + mov2.textura.Width;
+            }
+                  
+            if (mov2.rectangulo.X + mov2.textura.Width <= 0)
+            {
+                mov2.rectangulo.X = mov.rectangulo.X + mov.textura.Width;
+            }
+            
+            mov.Actualizar();
+            mov2.Actualizar();
             base.Update(gameTime);
         }
 
@@ -76,7 +80,10 @@ namespace Ejer4ParallaxBackground
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            mov.dibujar(spriteBatch);
+            mov2.dibujar(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
