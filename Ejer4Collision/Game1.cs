@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Ejer4Collision
 {
@@ -12,6 +13,8 @@ namespace Ejer4Collision
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        //
+        private List<Sprite> listSprite;
 
         public Game1()
         {
@@ -29,6 +32,8 @@ namespace Ejer4Collision
         {
             // TODO: Add your initialization logic here
 
+            this.IsMouseVisible = false;
+
             base.Initialize();
         }
 
@@ -42,6 +47,37 @@ namespace Ejer4Collision
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            //
+            var playerTexture = Content.Load<Texture2D>("dirt_n");
+            listSprite = new List<Sprite>()
+            {
+                new Player(playerTexture)
+                {
+                    input = new Input()
+                    {
+                        Left = Keys.A,
+                        Right = Keys.D,
+                        Up = Keys.W,
+                        Down = Keys.S,
+                    },
+                    position = new Vector2(100, 100),
+                    colour = Color.Blue,
+                    speed = 5f,
+                },
+                new Player(playerTexture)
+                {
+                    input = new Input()
+                    {
+                        Left = Keys.Left,
+                        Right = Keys.Right,
+                        Up = Keys.Up,
+                        Down = Keys.Down,
+                    },
+                    position = new Vector2(300, 100),
+                    colour = Color.Red,
+                    speed = 5f,
+                },
+            };
         }
 
         /// <summary>
@@ -60,8 +96,11 @@ namespace Ejer4Collision
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //
+            foreach (var sprite in listSprite)
+            {
+                sprite.Update(gameTime, listSprite);
+            }
 
             // TODO: Add your update logic here
 
@@ -77,6 +116,15 @@ namespace Ejer4Collision
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            //
+            spriteBatch.Begin();
+
+            foreach (var sprite in listSprite)
+            {
+                sprite.Draw(spriteBatch);
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
