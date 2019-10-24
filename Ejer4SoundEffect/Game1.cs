@@ -11,6 +11,7 @@ namespace Ejer4SoundEffect
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        //lol
 
         public Game1()
         {
