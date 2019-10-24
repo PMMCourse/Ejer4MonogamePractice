@@ -12,6 +12,8 @@ namespace Ejer4SpriteSheet
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D sprite;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,6 +39,7 @@ namespace Ejer4SpriteSheet
         /// </summary>
         protected override void LoadContent()
         {
+            sprite=Content.Load<Texture2D>("sprite/spritePersonaje");
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -76,6 +79,11 @@ namespace Ejer4SpriteSheet
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(sprite,new Rectangle(50,50,50,50),Color.White);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
