@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Ejer4Collision
 {
@@ -10,8 +11,15 @@ namespace Ejer4Collision
     /// </summary>
     public class Game1 : Game
     {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public Texture2D soldadoTex;
+        public Texture2D balaTex;
+        public Vector2 enemyPosition;
+        public float speed;
+        public Rectangle soldado;
+        public Rectangle bala;
 
         public Game1()
         {
@@ -38,10 +46,14 @@ namespace Ejer4Collision
         /// </summary>
         protected override void LoadContent()
         {
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            soldadoTex = Content.Load<Texture2D>("combatir");
+            balaTex = Content.Load<Texture2D>("bala");
+            enemyPosition = new Vector2(1000, 200);
+
         }
 
         /// <summary>
@@ -60,12 +72,29 @@ namespace Ejer4Collision
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
-            // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                this.Exit();
 
+            enemyPosition.X -= speed;
+            soldado = new Rectangle(200, 200, 100, 100);
+            bala = new Rectangle((int)enemyPosition.X, (int)enemyPosition.Y, 70, 50);
+
+            if (enemyPosition.X + balaTex.Width < 0)
+            {
+                enemyPosition.X = 900;
+            }
+            if (soldado.Intersects(bala))
+            {
+                speed = 1;
+
+            }
+            else
+            {
+                speed = 10;
+            }
             base.Update(gameTime);
+
         }
 
         /// <summary>
@@ -74,9 +103,13 @@ namespace Ejer4Collision
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.LightBlue);
+            spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            spriteBatch.Draw(soldadoTex, soldado, Color.White);
+            spriteBatch.Draw(balaTex, bala, Color.White);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

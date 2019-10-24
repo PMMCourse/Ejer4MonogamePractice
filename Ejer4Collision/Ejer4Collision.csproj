@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bala.png" />
+    <Content Include="Content\combatir.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
